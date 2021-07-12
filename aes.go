@@ -4,9 +4,11 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"io"
+	"strings"
 	"time"
 )
 
@@ -29,6 +31,12 @@ func GenerateKey() string {
 		panic(err.Error())
 	}
 	return base64.StdEncoding.EncodeToString(b)
+}
+
+// GenerateHashKey Generate encryption key for special props
+func GenerateHashKey(key string, props []string) string {
+	hash := sha256.Sum256([]byte(key + ":" + strings.Join(props, ":")))
+	return base64.StdEncoding.EncodeToString(hash[:])
 }
 
 // NewAasaamAES Create instance

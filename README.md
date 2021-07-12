@@ -12,6 +12,9 @@
     <a href="https://github.com/aasaam/aes-go/actions/workflows/go.yml" target="_blank">
       <img src="https://github.com/aasaam/aes-go/actions/workflows/go.yml/badge.svg" alt="Go" />
     </a>
+    <a href="https://coveralls.io/github/aasaam/aes-go">
+      <img alt="Coveralls" src="https://img.shields.io/coveralls/github/aasaam/aes-go">
+    </a>
     <a href="https://goreportcard.com/report/github.com/aasaam/aes-go">
       <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/aasaam/aes-go">
     </a>

@@ -23,3 +23,11 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
       - run: go test -covermode=count -coverprofile=coverage.out
+      - name: Install goveralls
+        env:
+          GO111MODULE: off
+        run: go get github.com/mattn/goveralls
+      - name: Send coverage
+        env:
+          COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: goveralls -coverprofile=coverage.out -service=github

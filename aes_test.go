@@ -13,6 +13,7 @@ type Test struct {
 	Message      string `json:"message"`
 	Encrypted    string `json:"encrypted"`
 	EncryptedTTL string `json:"encryptedTTL"`
+	NetworkData  string `json:"networkData"`
 }
 
 func TestGenerateKey(t *testing.T) {
@@ -74,6 +75,27 @@ func TestEncryptionDecryptionCross(t *testing.T) {
 	}
 	sameMessageTTL := aes.DecryptTTL(test.EncryptedTTL)
 	if sameMessageTTL != test.Message {
+		t.Errorf("Cross language Decryption failed")
+	}
+}
+
+func TestClientHash(t *testing.T) {
+	jsonFile, _ := os.Open("./test.json")
+	defer jsonFile.Close()
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var test Test
+	err := json.Unmarshal(byteValue, &test)
+	if err != nil {
+		t.Error(err)
+	}
+
+	clientDataSender := []string{"1.1.1.1", "user-agent"}
+
+	clientDataSenderKey := GenerateHashKey(test.Key, clientDataSender)
+
+	aes := NewAasaamAES(clientDataSenderKey)
+	sameMessage := aes.Decrypt(test.NetworkData)
+	if sameMessage != test.Message {
 		t.Errorf("Cross language Decryption failed")
 	}
 }
