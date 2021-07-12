@@ -18,6 +18,9 @@
     <a href="https://goreportcard.com/report/github.com/aasaam/aes-go">
       <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/aasaam/aes-go">
     </a>
+    <a href="https://github.com/aasaam/aes-go/blob/master/LICENSE">
+      <img alt="License" src="https://img.shields.io/github/license/aasaam/aes-go">
+    </a>
   </p>
 </div>
 
