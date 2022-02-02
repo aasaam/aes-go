@@ -100,6 +100,9 @@ func (a *AasaamAES) Encrypt(message string) string {
 // Decrypt Decrypt message
 // return Original message or empty string on failure
 func (a *AasaamAES) Decrypt(message string) string {
+	if message == "" {
+		return ""
+	}
 	packet, err := base64.StdEncoding.DecodeString(message)
 	if err != nil {
 		return ""

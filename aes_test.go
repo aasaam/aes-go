@@ -19,7 +19,7 @@ type Test struct {
 func TestGenerateKey(t *testing.T) {
 	key := GenerateKey()
 	if len(key) < 10 || len(key) > 128 {
-		t.Errorf("Seems key not generate well")
+		t.Errorf("seems key not generate well")
 	}
 }
 
@@ -29,16 +29,16 @@ func TestEncryptionDecryption(t *testing.T) {
 	message := "Sample message"
 	encrypted := aes.EncryptTTL(message, 1)
 	if encrypted == "" {
-		t.Errorf("Encryption failed")
+		t.Errorf("encryption failed")
 	}
 	sameMessage := aes.DecryptTTL(encrypted)
 	if sameMessage != message {
-		t.Errorf("Decryption failed")
+		t.Errorf("decryption failed")
 	}
 	time.Sleep(time.Second * 2)
 	expiredMessage := aes.DecryptTTL(encrypted)
 	if expiredMessage != "" {
-		t.Errorf("DecryptionTTL failed")
+		t.Errorf("decryptionttl failed")
 	}
 }
 
@@ -55,7 +55,20 @@ func TestDecryptionFailed(t *testing.T) {
 		t.Errorf("Decryption must failed")
 	}
 	if decrypted3 != "" {
-		t.Errorf("Decryption must failed")
+		t.Errorf("decryption must failed")
+	}
+
+	if aes2.Decrypt("") != "" {
+		t.Errorf("decryption empty must be empty")
+	}
+	if aes2.DecryptTTL("") != "" {
+		t.Errorf("decryption empty must be empty")
+	}
+	if aes2.Decrypt(" ") != "" {
+		t.Errorf("decryption near empty must be empty")
+	}
+	if aes2.DecryptTTL(" ") != "" {
+		t.Errorf("decryption near empty must be empty")
 	}
 }
 
@@ -71,11 +84,11 @@ func TestEncryptionDecryptionCross(t *testing.T) {
 	aes := NewAasaamAES(test.Key)
 	sameMessage := aes.Decrypt(test.Encrypted)
 	if sameMessage != test.Message {
-		t.Errorf("Cross language Decryption failed")
+		t.Errorf("cross language decryption failed")
 	}
 	sameMessageTTL := aes.DecryptTTL(test.EncryptedTTL)
 	if sameMessageTTL != test.Message {
-		t.Errorf("Cross language Decryption failed")
+		t.Errorf("cross language decryption failed")
 	}
 }
 
@@ -96,6 +109,6 @@ func TestClientHash(t *testing.T) {
 	aes := NewAasaamAES(clientDataSenderKey)
 	sameMessage := aes.Decrypt(test.NetworkData)
 	if sameMessage != test.Message {
-		t.Errorf("Cross language Decryption failed")
+		t.Errorf("cross language decryption failed")
 	}
 }
